@@ -16,11 +16,14 @@
     <% else %>
         <meta name="viewport" content="width=device-width">
     <% end_if %>
+
+    <link href="{$BaseHref}$ThemeDir/dist/css/style.css" rel='stylesheet' type='text/css'>
+
 </head>
 
 <%-- Browser Support Page is rendered if the browser is less than IE9 - add class 'ie8-support' to body.browser-support-page to support IE8 --%>
 <body>
-    <main class="global-main" role="main">
+    <main class="xs-m4" role="main">
         $Layout
         $Form
     </main>
