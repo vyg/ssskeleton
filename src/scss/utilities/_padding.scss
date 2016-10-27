@@ -1,0 +1,16 @@
+@if (variable-exists(breakpoints)) {
+  @each $bp-name, $bp-value in $breakpoints {
+    @media (min-width: $bp-value) {
+
+      @for $i from 0 through $padding-count {
+        .#{$bp-name}-p#{$i} { padding: #{$i * .5}rem; }
+        .#{$bp-name}-pt#{$i} { padding-top: #{$i * .5}rem; }
+        .#{$bp-name}-pr#{$i} { padding-right: #{$i * .5}rem; }
+        .#{$bp-name}-pb#{$i} { padding-bottom: #{$i * .5}rem; }
+        .#{$bp-name}-pl#{$i} { padding-left: #{$i * .5}rem; }
+        .#{$bp-name}-py#{$i} { padding-bottom: #{$i * .5}rem; padding-top: #{$i * .5}rem; }
+        .#{$bp-name}-px#{$i} { padding-left: #{$i * .5}rem; padding-right: #{$i * .5}rem; }
+      }
+    }
+  }
+}

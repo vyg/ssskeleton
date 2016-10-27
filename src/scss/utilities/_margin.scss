@@ -1,3 +1,9 @@
+.ml-auto { margin-left: auto; }
+.mr-auto { margin-right: auto; }
+.mx-auto { margin-left: auto; margin-right: auto; }
+.mb-auto { margin-bottom: auto; }
+.mt-auto { margin-top: auto; }
+
 @if (variable-exists(breakpoints)) {
   @each $bp-name, $bp-value in $breakpoints {
     @media (min-width: $bp-value) {

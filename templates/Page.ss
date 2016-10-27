@@ -23,7 +23,7 @@
 
 <%-- Browser Support Page is rendered if the browser is less than IE9 - add class 'ie8-support' to body.browser-support-page to support IE8 --%>
 <body>
-    <main class="xs-m4" role="main">
+    <main class="xs-p4" role="main">
         $Layout
         $Form
     </main>
