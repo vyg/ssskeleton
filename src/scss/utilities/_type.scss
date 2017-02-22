@@ -1,3 +1,14 @@
+// Font Sizes
+:root {
+  --h1: 3rem;
+  --h2: 2.25rem;
+  --h3: 1.5rem;
+  --h4: 1.25rem;
+  --h5: 1rem;
+  --h6: .875rem;
+}
+
+// Headings
 h1, .h1 { font-size: var(--h1) }
 h2, .h2 { font-size: var(--h2) }
 h3, .h3 { font-size: var(--h3) }
@@ -5,25 +16,24 @@ h4, .h4 { font-size: var(--h4) }
 h5, .h5 { font-size: var(--h5) }
 h6, .h6 { font-size: var(--h6) }
 
-:root {
-  --h1: 2rem;
-  --h2: 1.5rem;
-  --h3: 1.25rem;
-  --h4: 1rem;
-  --h5: .875rem;
-  --h6: .75rem;
-}
+// Line Height
+.lh1 { line-height: 1; }
+.lh2 { line-height: 1.25; }
+.lh3 { line-height: 1.5; }
 
+// Decoration
 .bold { font-weight: 700; }
 .medium { font-weight: 500; }
 .regular { font-weight: 400; }
 .italic { font-style: italic; }
 .caps { text-transform: uppercase; }
 
+// Justification
 .left-align { text-align: left; }
 .center { text-align: center; }
 .right-align { text-align: right; }
 .justify { text-align: justify; }
 
+// Wrapping
 .nowrap { white-space: nowrap; }
 .break-word { word-wrap: break-word; }
