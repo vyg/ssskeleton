@@ -1,0 +1,29 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module"
+  },
+  "globals": {
+    "jQuery": true,
+    "$": true
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "jquery": true
+  },
+  "rules": {
+      "semi": 2,
+      "indent": ["warn", 2, { "SwitchCase": 1 }],
+      "eqeqeq": 0,
+      "no-trailing-spaces": 0,
+      "no-new-object": 0,
+      "no-var": 1,
+      "no-unused-vars": 0,
+      "no-lone-blocks": 0,
+      "prefer-template": 1,
+      "template-curly-spacing": 1,
+      "no-useless-escape": 0,
+      "spaced-comment": 0
+  }
+}

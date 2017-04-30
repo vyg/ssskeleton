@@ -1,0 +1,90 @@
+.flex { display: flex; }
+.flex-column { flex-direction: column; }
+.flex-row { flex-direction: row; }
+.flex-wrap { flex-wrap: wrap; }
+.flex-nowrap { flex-wrap: nowrap; }
+
+.items-start { align-items: flex-start; }
+.items-end { align-items: flex-end; }
+.items-center { align-items: center; }
+.items-baseline { align-items: baseline; }
+.items-stretch { align-items: stretch; }
+
+.self-start { align-self: flex-start; }
+.self-end { align-self: flex-end; }
+.self-center { align-self: center; }
+.self-baseline { align-self: baseline; }
+.self-stretch { align-self: stretch; }
+
+.justify-start { justify-content: flex-start; }
+.justify-end { justify-content: flex-end; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.justify-around { justify-content: space-around; }
+
+.content-start { align-content: flex-start; }
+.content-end { align-content: flex-end; }
+.content-center { align-content: center; }
+.content-between { align-content: space-between; }
+.content-around { align-content: space-around; }
+.content-stretch { align-content: stretch; }
+
+// 1. Fix for Chrome 44 bug. https://code.google.com/p/chromium/issues/detail?id=506893
+.flex-auto {
+  flex: 1 1 auto;
+  min-height: 0; // 1
+  min-width: 0; // 1
+}
+
+.flex-none { flex: none; }
+
+@for $i from 0 through 10 {
+	.order-#{$i} { order: #{$i}; }
+}
+
+@if (variable-exists(breakpoints)) {
+  @each $bp-name, $bp-value in $breakpoints {
+    @media (min-width: $bp-value) {
+		.#{$bp-name}-flex { display: flex; }
+		.#{$bp-name}-flex-none { flex: none; }
+		.#{$bp-name}-flex-column { flex-direction: column; }
+		.#{$bp-name}-flex-row { flex-direction: row; }
+		.#{$bp-name}-flex-wrap { flex-wrap: wrap; }
+		.#{$bp-name}-flex-nowrap { flex-wrap: nowrap; }
+		.#{$bp-name}-items-start { align-items: flex-start; }
+		.#{$bp-name}-items-end { align-items: flex-end; }
+		.#{$bp-name}-items-center { align-items: center; }
+		.#{$bp-name}-items-baseline { align-items: baseline; }
+		.#{$bp-name}-items-stretch { align-items: stretch; }
+
+		.#{$bp-name}-self-start { align-self: flex-start; }
+		.#{$bp-name}-self-end { align-self: flex-end; }
+		.#{$bp-name}-self-center { align-self: center; }
+		.#{$bp-name}-self-baseline { align-self: baseline; }
+		.#{$bp-name}-self-stretch { align-self: stretch; }
+
+		.#{$bp-name}-justify-start { justify-content: flex-start; }
+		.#{$bp-name}-justify-end { justify-content: flex-end; }
+		.#{$bp-name}-justify-center { justify-content: center; }
+		.#{$bp-name}-justify-between { justify-content: space-between; }
+		.#{$bp-name}-justify-around { justify-content: space-around; }
+
+		.#{$bp-name}-content-start { align-content: flex-start; }
+		.#{$bp-name}-content-end { align-content: flex-end; }
+		.#{$bp-name}-content-center { align-content: center; }
+		.#{$bp-name}-content-between { align-content: space-between; }
+		.#{$bp-name}-content-around { align-content: space-around; }
+		.#{$bp-name}-content-stretch { align-content: stretch; }
+
+		.#{$bp-name}-flex-auto {
+		  flex: 1 1 auto;
+		  min-height: 0; // 1
+		  min-width: 0; // 1
+		}
+
+		@for $i from 0 through 10 {
+			.#{$bp-name}-order-#{$i} { order: #{$i}; }
+		}
+    }
+  }
+}

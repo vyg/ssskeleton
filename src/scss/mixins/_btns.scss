@@ -1,0 +1,39 @@
+@mixin button-variant($color, $background, $border, $hover-bg) {
+  color: $color;
+  background-color: $background;
+  border-color: $border;
+
+  .typography & {
+      color: $color;
+
+    &:visited,
+    &.visited {
+      color: $color;
+    }
+  }
+
+  // Hover and focus styles are shared
+  @include hover {
+    color: $color;
+    background-color: $hover-bg;
+  }
+
+  &:focus,
+  &.focus {
+      box-shadow: 0 0 0 2px rgba($border, .5);
+  }
+
+  // Disabled comes first so active can properly restyle
+  &.disabled,
+  &:disabled {
+    background-color: $background;
+    border-color: $border;
+  }
+
+  &:active,
+  &.active {
+    color: $color;
+    background-color: $hover-bg;
+    background-image: none; // Remove the gradient for the pressed/active state
+  }
+}

@@ -1,61 +1,91 @@
 var gulp = require('gulp'),
-	del = require('del'),
-	fs = require("fs"),
-	rucksack = require('gulp-rucksack'), //PostCSS CSS super powers library: http://simplaio.github.io/rucksack/docs/
-	rename = require('gulp-rename'),
-	sourcemaps   = require('gulp-sourcemaps'),
-	browserSync = require('browser-sync').create(),
+    plumber = require('gulp-plumber'),
+    notify = require('gulp-notify'),
+    rename = require('gulp-rename'),
+    postcss = require('gulp-postcss'),
+    customMedia = require('postcss-custom-media'),
+    objectFitImages = require('postcss-object-fit-images'),
+    autoprefixer = require('autoprefixer'),
+    minifycss = require('gulp-minify-css'),
+    sass = require('gulp-sass'),
+    sourcemaps = require('gulp-sourcemaps'),
+    eslint = require('gulp-eslint'),
+    uglify = require('gulp-uglify'),
+    babelify = require('babelify'),
+    browserify = require('browserify'),
+    imagemin = require('gulp-imagemin'),
+    source = require('vinyl-source-stream'),
+    buffer = require('vinyl-buffer');
 
-	sass = require('gulp-sass'),
-	bulkSass = require('gulp-sass-bulk-import'),
-	postcss      = require('gulp-postcss'),
-	autoprefixer = require('autoprefixer'),
-	cleanCSS = require('gulp-clean-css'),
+var sassPaths = [
+  './node_modules'
+];
 
-	eslint = require('gulp-eslint'),
-	concat = require('gulp-concat'),
-	uglify = require('gulp-uglify'),
-	plumber = require('gulp-plumber');
-
-
-/**
- * Live browser previews
- */
-gulp.task('browserSync', ['make-css'], function() {
-	browserSync.init({
-		open: 'external',
-		host: 'boilerplate.dev', // this can be anything at .dev, or localhost, or...
-		proxy: "boilerplate.dev", // this needs to be your project (localhost, .dev, vagrant domain et al)
-		watchTask: true
-	})
+gulp.task('bs-reload', function () {
+  browserSync.reload();
 });
 
-
-/**
- * Compile sass, allowing for wildcard @imports. Then run autoprefixer on the output
- * so that we don't have to manually write browser prefixes
- * Use sourcemaps so that we know where things have come from when using these files
- * Minify CSS using cleanCSS, and output to an style.css file.
- */
-gulp.task('make-css', function() {
-	return gulp.src('src/scss/style.scss')
-		.pipe(plumber())
-		.pipe(sourcemaps.init())
-		.pipe(bulkSass())
-		.pipe(sass()) // Using gulp-sass
-		.pipe(cleanCSS({compatibility: 'ie9'}))
-		.pipe(postcss([ autoprefixer({ browsers: ['last 2 versions'] }) ]))
-		.pipe(rucksack({
-			alias: false
-		}))
-		.pipe(concat('style.css'))
-		.pipe(sourcemaps.write('.'))
-		.pipe(plumber.stop())
-		.pipe(gulp.dest('dist/css/'))
+gulp.task('styles', function(){
+  gulp.src(['src/scss/**/*.scss'])
+    .pipe(plumber({
+      errorHandler: function (error) {
+        console.log(error.message);
+        notify().write(error);
+        this.emit('end');
+    }}))
+    .pipe(sass({
+      includePaths: sassPaths
+    }))
+    .pipe(postcss([autoprefixer({ browsers: ['last 2 versions', 'Explorer >= 8', 'iOS >= 6', 'Safari >= 6'] }), customMedia(), objectFitImages()]))
+    .pipe(gulp.dest('dist/css/'))
+    .pipe(rename({suffix: '.min'}))
+    .pipe(minifycss())
+    .pipe(sourcemaps.write('.'))
+    .pipe(plumber.stop())
+    .pipe(gulp.dest('dist/css/'))
 });
 
-gulp.task('watch', ['make-css', 'browserSync'], function () {
-	gulp.watch('src/scss/**/*.scss', ['make-css', browserSync.reload]); //watch sass in project sass folder, run tasks
+gulp.task('scripts', function() {
+  return browserify({
+    entries: ["src/js/index.js"]
+  })
+  .on('error', function (error) {
+    console.log(error.toString());
+    notify().write(error);
+    this.emit('end');
+  })
+  .transform(babelify, {presets: ['es2015']})
+  .bundle()
+  .pipe(source("bundle.js"))
+  .pipe(gulp.dest('dist/js'))
+  .pipe(buffer())
+  .pipe(rename({suffix: '.min'}))
+  .pipe(uglify())
+  .pipe(gulp.dest('dist/js'))
 });
 
-gulp.task('default', ['watch']);
+gulp.task('lint', function() {
+  return gulp.src([
+    'src/js/**/*.js'
+  ])
+  .pipe(eslint({
+    configFile: '.eslintrc.json'
+  }))
+  .pipe(eslint.format())
+  .pipe(eslint.failAfterError())
+  .on("error", notify.onError(eslint.format()))
+});
+
+gulp.task('build-js', ['scripts', 'lint']);
+
+gulp.task('images', function() {
+  gulp.src(['src/images/**/*'])
+      .pipe(imagemin())
+      .pipe(gulp.dest('dist/images'))
+});
+
+gulp.task('default', ['styles', 'build-js', 'images'], function(){
+  gulp.watch("src/scss/**/*.scss", ['styles']);
+  gulp.watch("src/js/**/*.js", ['build-js']);
+  gulp.watch("src/images/**/*", ['images']);
+});

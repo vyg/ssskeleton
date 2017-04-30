@@ -1,0 +1,6 @@
+// Set everything by default to use border box
+* { box-sizing: border-box; }
+
+// Helper classes for other box-sizing
+.border-box { box-sizing: border-box; }
+.content-box { box-sizing: content-box; }

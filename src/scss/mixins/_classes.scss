@@ -1,0 +1,5 @@
+@mixin make-classes($parameter, $className) {
+  @each $class, $value in $className {
+    .#{$class} { $parameter: $value; }
+  }
+}

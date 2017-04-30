@@ -1,0 +1,60 @@
+
+// Breakpoints
+$breakpoints: (
+  xs: 0,
+  sm: 48em,  //768px
+  md: 64em,  //1024px
+  lg: 74em
+);
+
+// Max widths
+$max-widths-on: false !default;
+
+$container-max-widths: (
+  sm: 40em,
+  md: 48em,
+  lg: 72em
+);
+
+$grid-columns: 12 !default;
+$grid-gutter-width-base: 30px !default;
+$grid-gutter-widths: (
+  xs: $grid-gutter-width-base,
+  sm: $grid-gutter-width-base,
+  md: $grid-gutter-width-base,
+  lg: $grid-gutter-width-base,
+  xl: $grid-gutter-width-base
+) !default;
+
+// Lets use some post-css magic with @custom-media
+// To include these media queries, just use:
+// @media (--breakpoint-sm) {}
+
+@if (variable-exists(breakpoints)) {
+  @each $bp-name, $bp-value in $breakpoints {
+    @custom-media --breakpoint-#{$bp-name} (min-width: #{$bp-value});
+  }
+}
+
+// Loop Counts
+$margin-count: 10; //Generates margin classes 0.5rem increments
+$padding-count: 10; //Generates padding classes in 0.5rem increments
+$layout-count: 25; //Generates height/width classes in 0.5rem increments
+
+// Fonts
+$font-sizes: (
+  f1: 3rem,
+  f2: 2.25rem,
+  f3: 1.5rem,
+  f4: 1.25rem,
+  f5: 1rem,
+  f6: .875rem
+);
+
+$line-heights: (
+  base: 1,
+  body: 1.25,
+  title: 1.5
+);
+
+// Colours

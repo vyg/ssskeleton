@@ -1,39 +1,74 @@
-// Font Sizes
-:root {
-  --h1: 3rem;
-  --h2: 2.25rem;
-  --h3: 1.5rem;
-  --h4: 1.25rem;
-  --h5: 1rem;
-  --h6: .875rem;
+* {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-// Headings
-h1, .h1 { font-size: var(--h1) }
-h2, .h2 { font-size: var(--h2) }
-h3, .h3 { font-size: var(--h3) }
-h4, .h4 { font-size: var(--h4) }
-h5, .h5 { font-size: var(--h5) }
-h6, .h6 { font-size: var(--h6) }
+@if (variable-exists(font-sizes)) {
+  @each $class, $value in $font-sizes {
+    .#{$class} { font-size: $value; }
+  }
+}
 
-// Line Height
-.lh1 { line-height: 1; }
-.lh2 { line-height: 1.25; }
-.lh3 { line-height: 1.5; }
+h1 { @extend .f1; }
+h2 { @extend .f2; }
+h3 { @extend .f3; }
+h4 { @extend .f4; }
+h5 { @extend .f5; }
+h6 { @extend .f6; }
 
-// Decoration
+.lh-solid { line-height: 1; }
+.lh-heading { line-height: 1.1; }
+.lh-title { line-height: 1.25; }
+.lh-copy { line-height: 1.5; }
+
 .bold { font-weight: 700; }
 .medium { font-weight: 500; }
 .regular { font-weight: 400; }
 .italic { font-style: italic; }
-.caps { text-transform: uppercase; }
 
-// Justification
-.left-align { text-align: left; }
-.center { text-align: center; }
-.right-align { text-align: right; }
+.ttn { text-transform: none; }
+.ttu { text-transform: uppercase; }
+
+.tds { text-decoration: line-through; }
+.tdu { text-decoration: underline; }
+.tdn { text-decoration: none; }
+
+.h-underline:hover { text-decoration: underline; }
+
+.align-left { text-align: left; }
+.align-center { text-align: center; }
+.align-right { text-align: right; }
 .justify { text-align: justify; }
 
-// Wrapping
 .nowrap { white-space: nowrap; }
 .break-word { word-wrap: break-word; }
+
+.wrap-mobile {
+  word-wrap: break-word;
+  @media (--breakpoint-sm) {
+    white-space: nowrap;
+  }
+}
+
+
+// Lists
+.list-style-none { list-style: none; }
+.list-reset {
+  list-style: none;
+  padding-left: 0;
+}
+
+.list-horizontal {
+  > li {
+    display: inline-block;
+  }
+}
+
+.highlight { background: yellow; }
+
+.hidden,
+.forscreenreader {
+  left: -9999px;
+  position: absolute;
+}

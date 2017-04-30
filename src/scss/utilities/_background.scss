@@ -1,0 +1,5 @@
+@if (variable-exists(background-colors)) {
+  @each $colour, $value in $background-colors {
+    .bg--#{$colour} { background-color: $value; }
+  }
+}

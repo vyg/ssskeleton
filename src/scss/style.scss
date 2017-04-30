@@ -1,2 +1,11 @@
-@import 'utilities/*';
-@import 'components/*';
+@import 'config';
+@import 'utilities/normalize'; // http://normalize.css.github.io
+
+@import 'mixins';
+@import 'utilities';
+@import 'components';
+
+// Browser polyfill hacks
+@import 'polyfill';
+// Print stlyes
+@import 'print';
